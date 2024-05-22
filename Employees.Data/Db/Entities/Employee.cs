@@ -17,13 +17,14 @@ namespace Employees.Data.Db.Entities
         public string LastName { get; set; }
         public string Patronymic { get; set; }
         [Required]
-        public DateTime BirthDate {  get; set; }
+        public DateTime BirthDate { get; set; }
         [Required]
         public string Position { get; set; }
         public string Phone { get; set; }
+        public PhoneCode PhoneCode { get; set; }
         [Required]
         public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set;}
+        public DateOnly EndDate { get; set; }
 
     }
 }
