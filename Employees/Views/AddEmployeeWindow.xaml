@@ -5,26 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:local="clr-namespace:Employees.Views" xmlns:models="clr-namespace:Employees.ViewModels" d:DataContext="{d:DesignInstance Type=models:AddNewViewModel}"
         mc:Ignorable="d"
-        Title="AddEmployeeWindow" Height="339.299" Width="337" >
+        Title="AddEmployeeWindow" Height="539" Width="442" >
 
-    <Window.Resources>
-        
-        
-    </Window.Resources>
-    
     <Grid Margin="0,0,0,7" >
         <StackPanel Margin="10,22,10,13">
             <TextBlock Text="First name" />
             <TextBox Name="firstName" Text="{Binding Path=Employee.FirstName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
             <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=firstName}" Foreground="Red"/>
-            
+
             <TextBlock Text="Second name" />
             <TextBox Name="secondName" Text="{Binding Path=Employee.SecondName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
             <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=secondName}" Foreground="Red"/>
 
             <TextBlock Text="Patronymic" />
             <TextBox Name="patronymic" Text="{Binding Path=Employee.Patronymic, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
-          
+
             <TextBlock Text="Phone number" />
             <TextBox Name="phone" Text="{Binding Path=Employee.PhoneNumber, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
             <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=phone}" Foreground="Red"/>
@@ -43,7 +38,7 @@
             <TextBlock Text="{Binding ElementName=salary, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
 
             <TextBlock Text="Employment date" />
-            <DatePicker SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.EmploymentDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
+            <DatePicker x:Name="employmentDatePicker" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.EmploymentDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
             FirstDayOfWeek="Monday"/>
             <TextBlock Text="{Binding ElementName=employmentDatePicker, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
 
@@ -51,13 +46,13 @@
             <DatePicker x:Name="dismissalDatePicker" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.DismissalDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
             FirstDayOfWeek="Monday"/>
             <TextBlock Text="{Binding ElementName=dismissalDatePicker, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
-            
+
             <Label>
                 <LineBreak/>
             </Label>
             <Button Click="SaveNew_Click">Save</Button>
         </StackPanel>
     </Grid>
-    
+
 
 </Window>

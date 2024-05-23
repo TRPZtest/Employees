@@ -20,11 +20,15 @@ namespace Employees.Data.Db.Entities
         public DateTime BirthDate { get; set; }
         [Required]
         public string Position { get; set; }
-        public string Phone { get; set; }
+        [Required]
+        public Double Salary { get; set; }
+        public string PhoneNumber { get; set; }
         public PhoneCode PhoneCode { get; set; }
         [Required]
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public int PhoneCodeId { get; set; }
+        [Required]
+        public DateOnly EmploymentDate { get; set; }
+        public DateOnly? DismissalDate { get; set; }
 
     }
 }

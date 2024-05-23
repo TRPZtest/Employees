@@ -19,7 +19,6 @@ namespace Employees.ViewModels
                 new PhoneCode() { Id = 1, Code = "+380" },
                 new PhoneCode() {Code = "+48" }             
             };         
-        }
-   
+        }   
     }
 }

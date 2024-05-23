@@ -11,20 +11,19 @@ using System.Windows;
 
 namespace Employees.Models
 {
-    public class EmployeeModel : BindableBase, IDataErrorInfo
+    public class EmployeeModel : IDataErrorInfo
     {         
+        public int Id { get; set; }
         public string FirstName { get; set; }
-        public string SecondName { get; set; }
+        public string LastName { get; set; }
         public string Patronymic { get; set; }
         public PhoneCode PhoneCode { get; set; }
         public string PhoneNumber { get; set; }
-        public int Salary { get; set; }
-        public DateTime? EmploymentDate {  get; set; }
-        public DateTime? DismissalDate {  get; set; }
+        public string Position { get; set; }
+        public double Salary { get; set; }
+        public DateOnly? EmploymentDate {  get; set; }
+        public DateOnly? DismissalDate {  get; set; }
         
-
-
-
         public string Error => throw new NotImplementedException();
 
         public string this[string columnName]
@@ -38,8 +37,8 @@ namespace Employees.Models
                         if (string.IsNullOrEmpty(FirstName))
                             return "First name is required";
                         break;
-                    case nameof(SecondName):
-                        if (string.IsNullOrEmpty(SecondName))
+                    case nameof(LastName):
+                        if (string.IsNullOrEmpty(LastName))
                             return "Second name is required";
                         break;
                     case nameof(PhoneCode):
@@ -55,6 +54,8 @@ namespace Employees.Models
                             return "Salary must be not a zero";
                         break;
                     case nameof(EmploymentDate):
+                        if (EmploymentDate is null)
+                            return "Employment date is required";
                         if (EmploymentDate > DismissalDate && DismissalDate != null)
                             return "Dissmissale date must be later then employment date";
                         break;
