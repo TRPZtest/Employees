@@ -12,13 +12,14 @@ using System.Windows;
 
 namespace Employees.Models
 {
-    public class EmployeeModel : IDataErrorInfo
+    public class EmployeeModel : BindableBase, IDataErrorInfo
     {
         public int Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        [Required]
         public string Patronymic { get; set; }
         [Required]
         public DateTime? BirthDate { get; set; }
@@ -32,8 +33,7 @@ namespace Employees.Models
         [Required]
         public double Salary { get; set; }
         [Required]
-        public DateTime? EmploymentDate { get; set; }
-        [Required]
+        public DateTime? EmploymentDate { get; set; }      
         public DateTime? DismissalDate { get; set; }
 
         public string FullPhoneNumber => PhoneCode?.Code + PhoneNumber;
@@ -65,7 +65,7 @@ namespace Employees.Models
                         , validationResults))
                     return null;
 
-                return validationResults.First().ErrorMessage;
+               return validationResults.First().ErrorMessage;
             }
         }
     }

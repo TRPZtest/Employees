@@ -22,19 +22,15 @@ namespace Employees.Views
     /// </summary>
     public partial class AddEmployeeWindow : Window
     {
-        private AddNewViewModel _viewModel;
-        public AddEmployeeWindow()
-        {
-            var vm = new AddNewViewModel();
-            _viewModel = vm;
-            DataContext = vm;
+        public event EventHandler UpdateEmployeeList;
+        private AddEditNewViewModel _viewModel;
+      
+   
+        public AddEmployeeWindow(AddEditNewViewModel viewModel)
+        {          
+            _viewModel = viewModel;
+            DataContext = viewModel;
             InitializeComponent();
-        }
-
-        private void SaveNew_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(_viewModel.Employee.PhoneCode.Code);
-            Close();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

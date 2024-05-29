@@ -11,26 +11,28 @@ using System.Windows.Input;
 
 namespace Employees.ViewModels
 {
-    public class MainViewModel 
+    public class MainViewModel : BindableBase
     {
         public ICommand AddNewButtonCommand { get; set; }
         public ICommand EditButtonComand { get; set; }
 
-        public MainViewModel()
-        {
-            LoadDataAsync();
+        private List<EmployeeModel> _employeesList;
+        public List<EmployeeModel> EmployeesList { get { return _employeesList; } set { SetProperty(ref _employeesList, value); }
         }
-
-        public ObservableCollection<EmployeeModel> EmployeesList { get; set; }
         public EmployeeModel SelectedEmployee { get; set; }
 
-        public async Task LoadDataAsync()
+        public MainViewModel()
+        {
+            LoadData();
+        }
+   
+        public void LoadData()
         {
             using AppDbContext dbContext = new AppDbContext();
 
-            var employees = await dbContext.Employees.Include(x => x.PhoneCode).ToListAsync();
+            var employees =  dbContext.Employees.Include(x => x.PhoneCode).ToList();
 
-            EmployeesList = new ObservableCollection<EmployeeModel>(employees.ToEmployeeModels());
+            EmployeesList = employees.ToEmployeeModels().ToList();
 
             AddNewButtonCommand = new RelayCommand(o => AddNewButtonClick());
             EditButtonComand = new RelayCommand(o => EditEmployeeButtonClick(), IsEmployeeChoosed);
@@ -38,13 +40,17 @@ namespace Employees.ViewModels
 
         private void AddNewButtonClick()
         {
-            AddEmployeeWindow window = new AddEmployeeWindow();
+            var addViewModel = new AddEditNewViewModel();         
+            addViewModel.RefreshDataRequested += LoadData;
+            AddEmployeeWindow window = new AddEmployeeWindow(addViewModel);            
             window.Show();
         }
 
         private void EditEmployeeButtonClick()
         {
-            EditEmployeeWindow window = new EditEmployeeWindow(SelectedEmployee);
+            var editViewModel = new AddEditNewViewModel(SelectedEmployee);
+            editViewModel.RefreshDataRequested += LoadData;
+            AddEmployeeWindow window = new AddEmployeeWindow(editViewModel);
             window.Show();
         }
 

@@ -1,66 +1,94 @@
 ﻿<Window x:Class="Employees.Views.AddEmployeeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:linq="clr-namespace:System.Linq;assembly=System.Core"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:local="clr-namespace:Employees.Views" xmlns:models="clr-namespace:Employees.ViewModels" d:DataContext="{d:DesignInstance Type=models:AddNewViewModel}"
-        mc:Ignorable="d"
-        Title="AddEmployeeWindow" Height="626" Width="562" >
-
-    <Grid Margin="0,0,0,7" >
-        <StackPanel Margin="10,22,10,13">
+        xmlns:local="clr-namespace:Employees.Views" xmlns:models="clr-namespace:Employees.ViewModels" d:DataContext="{d:DesignInstance Type=models:AddEditNewViewModel}"
+        mc:Ignorable="d"      
+        Title="AddEmployeeWindow" Height="642" Width="608" 
+        x:Name="window">
+        
+    
+        
+    <Window.Resources>
+        <Style x:Key="Validation" TargetType="{x:Type Control}">
+            <Setter Property="Margin" Value="0, 5, 0, 15"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <Border BorderThickness="2" BorderBrush="Red">
+                                <StackPanel>
+                                    <AdornedElementPlaceholder
+                                x:Name="errorControl" />
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="{Binding AdornedElement.ToolTip
+                        , ElementName=errorControl}" Foreground="Red" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="BorderBrush" Value="Red" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self}
+                    , Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="0,0,0,-100" >
+        <StackPanel Margin="10,22,29,127">
             <TextBlock Text="First name" />
-            <TextBox Name="firstName" Text="{Binding Path=Employee.FirstName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
-            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=firstName}" Foreground="Red"/>
+            <TextBox Style="{StaticResource Validation}" Text="{Binding Path=Employee.FirstName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
+
 
             <TextBlock Text="Second name" />
-            <TextBox Name="secondName" Text="{Binding Path=Employee.LastName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
-            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=secondName}" Foreground="Red"/>
+            <TextBox  Style="{StaticResource Validation}" Name="secondName" Text="{Binding Path=Employee.LastName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
+
 
             <TextBlock Text="Patronymic" />
             <TextBox Name="patronymic" Text="{Binding Path=Employee.Patronymic, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
 
             <TextBlock Text="Birth date" />
-            <DatePicker x:Name="birthdateDatePicker" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.BirthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
+            <DatePicker  Style="{StaticResource Validation}" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.BirthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
             FirstDayOfWeek="Monday"/>
-            <TextBlock Text="{Binding ElementName=birthdateDatePicker, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
+
 
             <TextBlock Text="Position" />
-            <TextBox Name="position" Text="{Binding Path=Employee.Position, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
-            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=position}" Foreground="Red"/>
+            <TextBox  Style="{StaticResource Validation}" Text="{Binding Path=Employee.Position, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
+
 
             <TextBlock Text="Phone number" />
-            <TextBox Name="phone" Text="{Binding Path=Employee.PhoneNumber, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
-            <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=phone}" Foreground="Red"/>
+            <TextBox   Style="{StaticResource Validation}" Text="{Binding Path=Employee.PhoneNumber, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
+
 
             <TextBlock Text="Phone number country code" />
             <ComboBox 
-                Name="phoneCode"
+                Style="{StaticResource Validation}"              
                 ItemsSource="{Binding PhoneCodes }"            
                 DisplayMemberPath="Code" 
                 SelectedItem="{Binding Path=Employee.PhoneCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             />
-            <TextBlock Text="{Binding ElementName=phoneCode, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
+
 
             <TextBlock Text="Salary" />
-            <TextBox Name="salary" PreviewTextInput="NumberValidationTextBox" Text="{ Binding Path=Employee.Salary, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
-            <TextBlock Text="{Binding ElementName=salary, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
-
+            <TextBox  Style="{StaticResource Validation}" PreviewTextInput="NumberValidationTextBox" Text="{ Binding Path=Employee.Salary, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
             <TextBlock Text="Employment date" />
-            <DatePicker x:Name="employmentDatePicker" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.EmploymentDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
+            <DatePicker  Style="{StaticResource Validation}" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.EmploymentDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
             FirstDayOfWeek="Monday"/>
-            <TextBlock Text="{Binding ElementName=employmentDatePicker, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
 
             <TextBlock Text="Dismissal date" />
-            <DatePicker x:Name="dismissalDatePicker" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.DismissalDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
+            <DatePicker  Style="{StaticResource Validation}" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.DismissalDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
             FirstDayOfWeek="Monday"/>
-            <TextBlock Text="{Binding ElementName=dismissalDatePicker, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red"/>
 
-            <Label>
-                <LineBreak/>
-            </Label>
-            <Button Command="{Binding SaveButtonCommand}">Save</Button>
+            <Button Command="{Binding SaveButtonCommand}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" Width="274" Content="Save"/>
         </StackPanel>
     </Grid>
 
