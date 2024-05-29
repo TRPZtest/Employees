@@ -1,4 +1,5 @@
 ﻿using Employees.Data.Db.Entities;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,55 +13,59 @@ using System.Windows;
 namespace Employees.Models
 {
     public class EmployeeModel : IDataErrorInfo
-    {         
+    {
         public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
         public string Patronymic { get; set; }
-        public PhoneCode PhoneCode { get; set; }
+        [Required]
+        public DateTime? BirthDate { get; set; }
+        [Required]
+        public PhoneCode? PhoneCode { get; set; }
+        [Required]
+        [Phone]
         public string PhoneNumber { get; set; }
+        [Required]
         public string Position { get; set; }
+        [Required]
         public double Salary { get; set; }
-        public DateOnly? EmploymentDate {  get; set; }
-        public DateOnly? DismissalDate {  get; set; }
-        
-        public string Error => throw new NotImplementedException();
+        [Required]
+        public DateTime? EmploymentDate { get; set; }
+        [Required]
+        public DateTime? DismissalDate { get; set; }
+
+        public string FullPhoneNumber => PhoneCode?.Code + PhoneNumber;
+
+        public string Error
+        {
+            get
+            {
+                var validationResults = new List<ValidationResult>();
+                Validator.TryValidateObject(this, new ValidationContext(this), validationResults);
+                if (validationResults.Any(x => !string.IsNullOrEmpty(x.ErrorMessage)))
+                    return "Validation error";
+                else return string.Empty;
+            }
+        }
 
         public string this[string columnName]
         {
             get
             {
-                string error = String.Empty;
-                switch (columnName)
-                {
-                    case nameof(FirstName):
-                        if (string.IsNullOrEmpty(FirstName))
-                            return "First name is required";
-                        break;
-                    case nameof(LastName):
-                        if (string.IsNullOrEmpty(LastName))
-                            return "Second name is required";
-                        break;
-                    case nameof(PhoneCode):
-                        if (PhoneCode is null)
-                            return "Phone country code is required";
-                        break;
-                    case nameof(PhoneNumber):
-                        if (string.IsNullOrEmpty(PhoneNumber))
-                            return "Phone is required";
-                        break;
-                    case nameof(Salary):
-                        if (Salary == 0)
-                            return "Salary must be not a zero";
-                        break;
-                    case nameof(EmploymentDate):
-                        if (EmploymentDate is null)
-                            return "Employment date is required";
-                        if (EmploymentDate > DismissalDate && DismissalDate != null)
-                            return "Dissmissale date must be later then employment date";
-                        break;
-                }
-                return error;
+                var validationResults = new List<ValidationResult>();
+
+                if (Validator.TryValidateProperty(
+                        GetType().GetProperty(columnName).GetValue(this)
+                        , new ValidationContext(this)
+                        {
+                            MemberName = columnName
+                        }
+                        , validationResults))
+                    return null;
+
+                return validationResults.First().ErrorMessage;
             }
         }
     }

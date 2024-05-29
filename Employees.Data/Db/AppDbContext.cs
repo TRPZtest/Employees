@@ -20,7 +20,7 @@ namespace Employees.Data.Db
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=D:\db.sqlite;");
+            optionsBuilder.UseSqlite(@"Data Source=C:\DB\db.sqlite;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace Employees.Data.Db
                     Position = "Manager",
                     PhoneNumber = "1234567890",
                     PhoneCodeId = 1,
-                    EmploymentDate = new DateOnly(2010, 5, 1)
+                    EmploymentDate = new DateTime(2010, 5, 1)
                 },
                 new Employee
                 {
@@ -57,7 +57,7 @@ namespace Employees.Data.Db
                     Position = "Developer",
                     PhoneNumber = "0987654321",
                     PhoneCodeId = 2,
-                    EmploymentDate = new DateOnly(2015, 6, 15)
+                    EmploymentDate = new DateTime(2015, 6, 15)
                 },
                 new Employee
                 {
@@ -69,7 +69,7 @@ namespace Employees.Data.Db
                     Position = "Designer",
                     PhoneNumber = "1112223333",
                     PhoneCodeId = 1,
-                    EmploymentDate = new DateOnly(2018, 7, 20)
+                    EmploymentDate = new DateTime(2018, 7, 20)
                 },
                 new Employee
                 {
@@ -81,7 +81,7 @@ namespace Employees.Data.Db
                     Position = "Analyst",
                     PhoneNumber = "4445556666",
                     PhoneCodeId = 1,
-                    EmploymentDate = new DateOnly(2020, 8, 10)
+                    EmploymentDate = new DateTime(2020, 8, 10)
                 },
                 new Employee
                 {
@@ -93,7 +93,7 @@ namespace Employees.Data.Db
                     Position = "Consultant",
                     PhoneNumber = "7778889999",
                     PhoneCodeId = 2,
-                    EmploymentDate = new DateOnly(2022, 9, 5)
+                    EmploymentDate = new DateTime(2022, 9, 5)
                 }
             );
         }

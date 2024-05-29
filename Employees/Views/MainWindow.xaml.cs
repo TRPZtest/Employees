@@ -18,26 +18,16 @@ namespace Employees
     /// </summary>
     public partial class MainWindow : Window
     {
-        EmployeeViewModel _viewModel;
+        MainViewModel _viewModel;
 
         public MainWindow()
         {
-            EmployeeViewModel vm = new EmployeeViewModel();
+            MainViewModel vm = new MainViewModel();
             
             InitializeComponent();              
             
             _viewModel = vm;
             DataContext = vm;
-        }
-
-        private void AddNew_Click(object sender, RoutedEventArgs e)
-        {
-            AddEmployeeWindow window = new AddEmployeeWindow();           
-            window.Show();          
-        }
-
-        private void Edit_Click(object sender, RoutedEventArgs e)
-        {          
-        }
+        }             
     }
 }

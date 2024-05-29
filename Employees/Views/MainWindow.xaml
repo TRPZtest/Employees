@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Employees"
+        xmlns:local="clr-namespace:Employees" xmlns:models="clr-namespace:Employees.Models" xmlns:viewmodels="clr-namespace:Employees.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.ColumnSpan="3">
             <Menu DockPanel.Dock="Top">
@@ -25,12 +25,20 @@
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="50"/>
                     <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}" Width="80"/>
+                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}" Width="80"/>
+                    <GridViewColumn Header="Patronymic" DisplayMemberBinding="{Binding Patronymic}" Width="80"/>
+                    <GridViewColumn Header="Birth Date" DisplayMemberBinding="{Binding BirthDate}" Width="100"/>
+                    <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding FullPhoneNumber}" Width="100"/>
+                    <GridViewColumn Header="Position" DisplayMemberBinding="{Binding Position}" Width="100"/>
+                    <GridViewColumn Header="Salary" DisplayMemberBinding="{Binding Salary}" Width="80"/>
+                    <GridViewColumn Header="Employment Date" DisplayMemberBinding="{Binding EmploymentDate}" Width="120"/>
+                    <GridViewColumn Header="Dismissal Date" DisplayMemberBinding="{Binding DismissalDate}" Width="120"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Grid.Column="3" Grid.ColumnSpan="1" Margin="10,22,10,13">
-            <Button Click="AddNew_Click"> Add New </Button>
-            <Button>Edit</Button>
+        <StackPanel Grid.Column="2" Grid.ColumnSpan="1" Margin="10,22,10,13">
+            <Button  Command="{Binding AddNewButtonCommand}">Add New</Button>
+            <Button Command="{Binding EditButtonComand}">Edit</Button>
         </StackPanel>
     </Grid>
 

@@ -26,9 +26,10 @@ namespace Employees
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Patronymic = employee.Patronymic,
+                BirthDate = employee.BirthDate,
                 Position = employee.Position,
                 Salary = employee.Salary,
-                PhoneCode = employee.PhoneCode,
+                PhoneCode = employee.PhoneCode,                
                 PhoneNumber = employee.PhoneNumber,
                 EmploymentDate = employee.EmploymentDate,
                 DismissalDate = employee.DismissalDate
@@ -43,13 +44,20 @@ namespace Employees
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Patronymic = employee.Patronymic,
+                BirthDate = employee.BirthDate.Value,
                 Position = employee.Position,
-                Salary = employee.Salary,
-                PhoneCode = employee.PhoneCode,
+                Salary = employee.Salary,               
+                PhoneCodeId = employee.PhoneCode.Id,
                 PhoneNumber = employee.PhoneNumber,
                 EmploymentDate = employee.EmploymentDate.Value,
                 DismissalDate = employee.DismissalDate
             };
         }
+
+        public static IEnumerable<EmployeeModel> ToEmployeeModels(this IEnumerable<Employee> employees)         
+        {
+            return employees.Select(x => x.ToEmployeeModel());
+        }
+        
     }
 }
