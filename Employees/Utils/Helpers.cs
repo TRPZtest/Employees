@@ -58,6 +58,10 @@ namespace Employees
         {
             return employees.Select(x => x.ToEmployeeModel());
         }
-        
+
+        public static IEnumerable<Employee> ToEmployeeEntities(this IEnumerable<EmployeeModel> employees)
+        {
+            return employees.Select(x => x.ToEmployeeEntity());
+        }
     }
 }

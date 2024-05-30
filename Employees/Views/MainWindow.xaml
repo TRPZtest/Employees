@@ -14,13 +14,22 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.ColumnSpan="3">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="New employee" />
                 <MenuItem Header="Statistics" />
-                <MenuItem Header="Import" />
-                <MenuItem Header="Export" />
+                <MenuItem Header="Import" Command="{Binding ImportCommand}"/>
+                <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
             </Menu>
         </DockPanel>
         <ListView Name="EmployeesGrid" ItemsSource="{Binding EmployeesList}" Margin="4,22,4,4" Grid.ColumnSpan="2" SelectedItem="{Binding SelectedEmployee}" SelectionMode="Single">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Control.Background" Value="LightCoral" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DismissalDate}" Value="{x:Null}">
+                            <Setter Property="Background" Value="White"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="50"/>
@@ -38,7 +47,8 @@
         </ListView>
         <StackPanel Grid.Column="2" Grid.ColumnSpan="1" Margin="10,22,10,13">
             <Button  Command="{Binding AddNewButtonCommand}">Add New</Button>
-            <Button Command="{Binding EditButtonComand}">Edit</Button>
+            <Button Command="{Binding EditButtonCommand}">Edit</Button>
+            <Button Command="{Binding DeleteCommand}">Delete</Button>
         </StackPanel>
     </Grid>
 
