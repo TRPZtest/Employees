@@ -82,9 +82,9 @@ namespace Employees.ViewModels
 
         private async Task ImportButtonClick()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog();  
             dialog.Filter = "Json files (*.json)|*.json";
-
+            dialog.CheckFileExists = true;
             dialog.ShowDialog();
 
 

@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,6 +15,7 @@ namespace Employees.Models
 {
     public class EmployeeModel : BindableBase, IDataErrorInfo
     {
+        [JsonIgnore]
         public int Id { get; set; }
         [Required]
         public string FirstName { get; set; }
