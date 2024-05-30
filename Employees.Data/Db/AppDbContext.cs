@@ -20,7 +20,8 @@ namespace Employees.Data.Db
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=C:\DB\db.sqlite;");
+            var path = $"{Directory.GetCurrentDirectory()}/db.sqlite";
+            optionsBuilder.UseSqlite($"Data Source={path}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
