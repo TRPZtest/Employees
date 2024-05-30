@@ -39,7 +39,7 @@ namespace Employees.ViewModels
         private async Task LoadDataAsync()
         {
             using var db = new AppDbContext();
-            PhoneCodes = await db.PhoneCodes.ToListAsync();            
+            PhoneCodes = await db.PhoneCodes.AsNoTracking().ToListAsync();            
         }
 
         private bool IsValid()

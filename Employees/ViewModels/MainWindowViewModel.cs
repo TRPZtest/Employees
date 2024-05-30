@@ -41,7 +41,10 @@ namespace Employees.ViewModels
         {
             using AppDbContext dbContext = new AppDbContext();
 
-            var employees =  dbContext.Employees.Include(x => x.PhoneCode).ToList();
+            var employees =  dbContext.Employees
+                .Include(x => x.PhoneCode)
+                .AsNoTracking()
+                .ToList();
 
             EmployeesList = employees.ToEmployeeModels().ToList();       
         }
