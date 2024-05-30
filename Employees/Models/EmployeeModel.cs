@@ -22,6 +22,7 @@ namespace Employees.Models
         [Required]
         public string LastName { get; set; }
         [Required]
+       
         public string Patronymic { get; set; }     
         public string FullName { get; set; }
         [Required]
@@ -35,8 +36,8 @@ namespace Employees.Models
         public string Position { get; set; }
         [Required]
         public double Salary { get; set; }
-        [Required]
-        public DateTime? EmploymentDate { get; set; }      
+        [Required]       
+        public DateTime? EmploymentDate { get; set; }       
         public DateTime? DismissalDate { get; set; }
 
         public string FullPhoneNumber => PhoneCode?.Code + PhoneNumber;
@@ -46,7 +47,7 @@ namespace Employees.Models
             get
             {
                 var validationResults = new List<ValidationResult>();
-                Validator.TryValidateObject(this, new ValidationContext(this), validationResults);
+                Validator.TryValidateObject(this, new ValidationContext(this), validationResults, true);
                 if (validationResults.Any(x => !string.IsNullOrEmpty(x.ErrorMessage)))
                     return "Validation error";
                 else return string.Empty;

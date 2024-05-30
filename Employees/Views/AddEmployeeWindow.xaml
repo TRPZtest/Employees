@@ -42,18 +42,18 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid Margin="0,0,0,-100" >
-        <StackPanel Margin="10,22,29,127">
+    <Grid >
+        <StackPanel>
             <TextBlock Text="First name" />
             <TextBox Style="{StaticResource Validation}" Text="{Binding Path=Employee.FirstName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
 
 
             <TextBlock Text="Second name" />
-            <TextBox  Style="{StaticResource Validation}" Name="secondName" Text="{Binding Path=Employee.LastName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
+            <TextBox  Style="{StaticResource Validation}" Text="{Binding Path=Employee.LastName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
 
 
             <TextBlock Text="Patronymic" />
-            <TextBox Name="patronymic" Text="{Binding Path=Employee.Patronymic, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
+            <TextBox   Style="{StaticResource Validation}" Text="{Binding Path=Employee.Patronymic, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True, NotifyOnValidationError=True }" />
 
             <TextBlock Text="Birth date" />
             <DatePicker  Style="{StaticResource Validation}" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.BirthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
@@ -87,7 +87,7 @@
             <TextBlock Text="Dismissal date" />
             <DatePicker  Style="{StaticResource Validation}" SelectedDateFormat="Long" SelectedDate="{Binding Path=Employee.DismissalDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"                  
             FirstDayOfWeek="Monday"/>
-
+                       
             <Button Command="{Binding SaveButtonCommand}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" Width="274" Content="Save"/>
         </StackPanel>
     </Grid>

@@ -50,12 +50,19 @@ namespace Employees.ViewModels
                 
         }
 
+        private void ValidateDates()
+        {
+            if (Employee.DismissalDate < Employee.EmploymentDate)
+                throw new Exception("Dissmissal date must be earlier then employemnet date"); 
+        }
+
         private async Task SaveNew(object parameter)
         {
             if (MessageBox.Show("Do you want to save new employee?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 try
                 {
+                    ValidateDates();
                     using var db = new AppDbContext();
 
                     db.Employees.Add(Employee.ToEmployeeEntity());
@@ -78,6 +85,7 @@ namespace Employees.ViewModels
             {
                 try
                 {
+                    ValidateDates();
                     using var db = new AppDbContext();
 
                     db.Employees.Update(Employee.ToEmployeeEntity());

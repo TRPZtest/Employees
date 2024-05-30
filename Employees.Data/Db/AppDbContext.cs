@@ -48,6 +48,7 @@ namespace Employees.Data.Db
                     Patronymic = "A.",
                     BirthDate = new DateTime(1980, 1, 1),
                     Position = "Manager",
+                    Salary = 1200,
                     PhoneNumber = "1234567890",
                     PhoneCodeId = 1,
                     EmploymentDate = new DateTime(2010, 5, 1)
@@ -60,6 +61,7 @@ namespace Employees.Data.Db
                     Patronymic = "B.",
                     BirthDate = new DateTime(1990, 2, 2),
                     Position = "Developer",
+                    Salary = 500,
                     PhoneNumber = "0987654321",
                     PhoneCodeId = 2,
                     EmploymentDate = new DateTime(2015, 6, 15)
@@ -72,6 +74,7 @@ namespace Employees.Data.Db
                     Patronymic = "C.",
                     BirthDate = new DateTime(1985, 3, 3),
                     Position = "Designer",
+                    Salary = 460,
                     PhoneNumber = "1112223333",
                     PhoneCodeId = 1,
                     EmploymentDate = new DateTime(2018, 7, 20)
@@ -84,6 +87,7 @@ namespace Employees.Data.Db
                     Patronymic = "D.",
                     BirthDate = new DateTime(1975, 4, 4),
                     Position = "Analyst",
+                    Salary = 625,
                     PhoneNumber = "4445556666",
                     PhoneCodeId = 1,
                     EmploymentDate = new DateTime(2020, 8, 10)
@@ -96,6 +100,7 @@ namespace Employees.Data.Db
                     Patronymic = "E.",
                     BirthDate = new DateTime(1995, 5, 5),
                     Position = "Consultant",
+                    Salary = 750,
                     PhoneNumber = "7778889999",
                     PhoneCodeId = 2,
                     EmploymentDate = new DateTime(2022, 9, 5)
