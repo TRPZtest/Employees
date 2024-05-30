@@ -22,7 +22,8 @@ namespace Employees.Models
         [Required]
         public string LastName { get; set; }
         [Required]
-        public string Patronymic { get; set; }
+        public string Patronymic { get; set; }     
+        public string FullName { get; set; }
         [Required]
         public DateTime? BirthDate { get; set; }
         [Required]

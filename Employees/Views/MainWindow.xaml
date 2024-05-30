@@ -33,9 +33,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="50"/>
-                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}" Width="80"/>
-                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}" Width="80"/>
-                    <GridViewColumn Header="Patronymic" DisplayMemberBinding="{Binding Patronymic}" Width="80"/>
+                    <GridViewColumn Header="Full Name" DisplayMemberBinding="{Binding FullName}" Width="80"/>
                     <GridViewColumn Header="Birth Date" DisplayMemberBinding="{Binding BirthDate}" Width="100"/>
                     <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding FullPhoneNumber}" Width="100"/>
                     <GridViewColumn Header="Position" DisplayMemberBinding="{Binding Position}" Width="100"/>
@@ -49,6 +47,13 @@
             <Button  Command="{Binding AddNewButtonCommand}">Add New</Button>
             <Button Command="{Binding EditButtonCommand}">Edit</Button>
             <Button Command="{Binding DeleteCommand}">Delete</Button>
+            <TextBlock>               
+                <LineBreak />
+                 Search by FullName:
+            </TextBlock>
+            <TextBox Text="{Binding Path=FullNameSearchString}"/>
+            <Button Command="{Binding SearchCommand}">Search</Button>
+            <Button Command="{Binding ResetSearchCommand}">Reset search</Button>
         </StackPanel>
     </Grid>
 

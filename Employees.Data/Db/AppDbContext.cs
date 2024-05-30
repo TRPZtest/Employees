@@ -26,7 +26,11 @@ namespace Employees.Data.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.FullName)
+                .HasComputedColumnSql("COALESCE(FirstName, '') || ' ' || COALESCE(LastName, '') || COALESCE(' ' || Patronymic, '')", true);
+
+
 
             // Seed data for PhoneCode
             modelBuilder.Entity<PhoneCode>().HasData(

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -15,15 +16,18 @@ namespace Employees.ViewModels
 {
     public class MainViewModel : BindableBase
     {
+        private string _fullNameSearchString;
+        public string FullNameSearchString { get { return _fullNameSearchString; } set { SetProperty(ref _fullNameSearchString, value); } }
         public ICommand AddNewButtonCommand { get; set; }
         public ICommand EditButtonCommand { get; set; }
         public ICommand ImportCommand { get; set; }
         public ICommand ExportCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+        public ICommand ResetSearchCommand { get; set; }
 
         private List<EmployeeModel> _employeesList;
-        public List<EmployeeModel> EmployeesList { get { return _employeesList; } set { SetProperty(ref _employeesList, value); }
-        }
+        public List<EmployeeModel> EmployeesList { get { return _employeesList; } set { SetProperty(ref _employeesList, value); } }
         public EmployeeModel SelectedEmployee { get; set; }
 
         public MainViewModel()
@@ -35,13 +39,20 @@ namespace Employees.ViewModels
             ExportCommand = new RelayCommand(async o => await ExportButtonClick());
             ImportCommand = new RelayCommand(async (o) => await ImportButtonClick());
             DeleteCommand = new RelayCommand(o => DeleteButtonClick(), IsEmployeeChoosed);
+            SearchCommand = new RelayCommand(o => SearchClick());
+            ResetSearchCommand = new RelayCommand(o =>  ResetSearchClick());
         }
    
         public void LoadData()
-        {
+        {          
             using AppDbContext dbContext = new AppDbContext();
 
-            var employees =  dbContext.Employees
+            var employeesQuery = dbContext.Employees.AsQueryable();
+
+            if (!string.IsNullOrEmpty(FullNameSearchString))
+                employeesQuery = employeesQuery.Where(x => EF.Functions.Like(x.FullName, $"%{FullNameSearchString}%")).AsQueryable();
+
+            var employees= employeesQuery
                 .Include(x => x.PhoneCode)
                 .AsNoTracking()
                 .ToList();
@@ -128,6 +139,17 @@ namespace Employees.ViewModels
             if (SelectedEmployee is null)
                 return false;
             else return true;
+        }
+
+        public void SearchClick()
+        {
+            LoadData();
+        }
+
+        public void ResetSearchClick()
+        {
+            FullNameSearchString = string.Empty;
+            LoadData();
         }
     }
 }
