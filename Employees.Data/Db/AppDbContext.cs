@@ -16,6 +16,7 @@ namespace Employees.Data.Db
         
         public AppDbContext() : base()
         {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -1,6 +1,7 @@
 ﻿using Employees.Commands;
 using Employees.Data.Db;
 using Employees.Models;
+using Employees.Services;
 using Employees.Utils;
 using Employees.Views;
 using Microsoft.EntityFrameworkCore;
@@ -38,26 +39,16 @@ namespace Employees.ViewModels
             EditButtonCommand = new RelayCommand(o => EditEmployeeButtonClick(), IsEmployeeChoosed);
             ExportCommand = new RelayCommand(async o => await ExportButtonClick());
             ImportCommand = new RelayCommand(async (o) => await ImportButtonClick());
-            DeleteCommand = new RelayCommand(o => DeleteButtonClick(), IsEmployeeChoosed);
+            DeleteCommand = new RelayCommand(async o => await DeleteButtonClick(), IsEmployeeChoosed);
             SearchCommand = new RelayCommand(o => SearchClick());
             ResetSearchCommand = new RelayCommand(o =>  ResetSearchClick());
         }
    
         public void LoadData()
         {          
-            using AppDbContext dbContext = new AppDbContext();
-
-            var employeesQuery = dbContext.Employees.AsQueryable();
-
-            if (!string.IsNullOrEmpty(FullNameSearchString))
-                employeesQuery = employeesQuery.Where(x => EF.Functions.Like(x.FullName, $"%{FullNameSearchString}%")).AsQueryable();
-
-            var employees= employeesQuery
-                .Include(x => x.PhoneCode)
-                .AsNoTracking()
-                .ToList();
-
-            EmployeesList = employees.ToEmployeeModels().ToList();       
+            using var db = new EmployeeService();
+                
+            EmployeesList = db.GetAsync(FullNameSearchString).Result.ToEmployeeModels().ToList();     
         }
 
         private void AddNewButtonClick()
@@ -76,13 +67,13 @@ namespace Employees.ViewModels
             window.Show();
         }
 
-        private void DeleteButtonClick()
+        private async Task DeleteButtonClick()
         {
             try
             {
-                using var db = new AppDbContext();
+                using var db = new EmployeeService();
 
-                db.Employees.Where(x => x.Id == SelectedEmployee.Id).ExecuteDelete();
+                await db.DeleteById(SelectedEmployee.Id);
                 LoadData();
             }
             catch (Exception ex)
@@ -105,13 +96,12 @@ namespace Employees.ViewModels
 
                 try
                 {
-                    using var db = new AppDbContext();
+                    using var db = new EmployeeService();
 
                     var entites = employeeModels?.ToEmployeeEntities();
 
-                    await db.AddRangeAsync(entites);
-                    await db.SaveChangesAsync();
-
+                    await db.AddAsync(entites);
+                    
                     LoadData();
                 }
                 catch(Exception ex)

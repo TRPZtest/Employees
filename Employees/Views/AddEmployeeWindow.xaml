@@ -71,7 +71,8 @@
             <TextBlock Text="Phone number country code" />
             <ComboBox 
                 Style="{StaticResource Validation}"              
-                ItemsSource="{Binding PhoneCodes }"            
+                ItemsSource="{Binding PhoneCodes }"     
+                IsSynchronizedWithCurrentItem="True"
                 DisplayMemberPath="Code" 
                 SelectedItem="{Binding Path=Employee.PhoneCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
             />

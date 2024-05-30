@@ -2,6 +2,7 @@
 using Employees.Data.Db;
 using Employees.Data.Db.Entities;
 using Employees.Models;
+using Employees.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -38,8 +39,8 @@ namespace Employees.ViewModels
             
         private async Task LoadDataAsync()
         {
-            using var db = new AppDbContext();
-            PhoneCodes = await db.PhoneCodes.AsNoTracking().ToListAsync();            
+            using var db = new EmployeeService();
+            PhoneCodes = await db.GetPhoneCodesAsync();          
         }
 
         private bool IsValid()
@@ -63,12 +64,10 @@ namespace Employees.ViewModels
                 try
                 {
                     ValidateDates();
-                    using var db = new AppDbContext();
+                    using var db = new EmployeeService();
 
-                    db.Employees.Add(Employee.ToEmployeeEntity());
-                    await db.SaveChangesAsync();
+                    await db.AddAsync(Employee.ToEmployeeEntity());              
                     RefreshDataRequested?.Invoke();
-
                     var window = parameter as Window;                            
                     window.Close();
                 }
@@ -86,10 +85,9 @@ namespace Employees.ViewModels
                 try
                 {
                     ValidateDates();
-                    using var db = new AppDbContext();
+                    using var db = new EmployeeService();
 
-                    db.Employees.Update(Employee.ToEmployeeEntity());
-                    await db.SaveChangesAsync();
+                    await db.UpdateAsync(Employee.ToEmployeeEntity());                 
                     RefreshDataRequested?.Invoke();
 
                     var window = parameter as Window;                 
